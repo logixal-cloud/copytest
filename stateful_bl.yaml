@@ -1,0 +1,1650 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://192.168.15.185:4020/api/stateful
+  description: Generated server url
+tags:
+- name: Broadleaf Offer Controller
+  description: This controller calls Broadleaf Discount APIs
+- name: Broadleaf Checkout Controller
+  description: This controller calls Broadleaf Checkout APIs
+- name: broadleaf Customer Signup Controller
+  description: This controller call broadleaf Customer Signup.
+- name: Broadleaf Commerce Cart Controller
+  description: This controller calls Broadleaf Commerce Cart APIs
+paths:
+  /updateShippingAddress:
+    post:
+      tags:
+      - Broadleaf Checkout Controller
+      summary: Call Broadleaf API to get Customer Address
+      operationId: updateShippingAddress
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Update Shipping request:
+                description: Update Shipping request
+                value:
+                  updateShippingAddressAction:
+                    body:
+                      cartId: 01H6TMCMGG5NFW1BSYQ2CR1DFP
+                      refNo: 01H6TMCMGG5NFW1BSYQ2CR1DFP-0
+                      firstName: Shailendra1
+                      lastName: Singh
+                      streetName: 1 Apple
+                      streetNumber: Park Way
+                      city: IN
+                      country: DE
+                      postalCode: "95014"
+                      phone: "05686856866"
+                      shippingMethodId: FIXED_PRIORITY
+                      description: Priority
+        required: true
+      responses:
+        "200":
+          description: Call Broadleaf API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                shippingAddress:
+                  status: 200
+                  message:
+                    data:
+                      shippingDetails:
+                        refNo: 01H6TMCMGG5NFW1BSYQ2CR1DFP-0
+                        firstName: Shailendra1 Singh
+                        streetNumber: Park Way
+                        streetName: 1 Apple
+                        city: IN
+                        state: IN
+                        country: DE
+                        postalCode: "95014"
+                        phone: "05686856866"
+                        shippingMethodName: FIXED_PRIORITY
+                        amount: 10.0
+                        currency: USD
+  /updateLineItem:
+    post:
+      tags:
+      - Broadleaf Commerce Cart Controller
+      summary: Call Broadleaf Commerce Cart API to Update Cart Line Item
+      operationId: updateCartLineItem
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Update Cart Line Item:
+                summary: Update Cart Line Item
+                description: Request Body for Update Cart Line Item
+                value:
+                  id: 01H6B487BYE01K0XECN7EA1VFJ
+                  lineItemId: 01H6BHM8QNMW2510JV89TF0CW7
+                  quantity: "2"
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                responseCode: 200
+                cartDetails:
+                  responseCode: 200
+                  results:
+                    data:
+                    - cartId: ff921929-fe87-443b-b12a-4ad16b20d267
+                      customerId: 5a0ff890-b219-4dc4-9c14-1cb0e64e8999
+                      anonymousId: null
+                      version: 19
+                      lineItems:
+                      - id: 18296021-df33-406d-b6b6-8cdfe421b495
+                        quantity: 4
+                        productId: 55e4a37a-145d-4ee0-bf05-90828a0d8454
+                        productKey: "82322"
+                        name: FlipFlops“SlimCrystalPoem“Havaianasblue
+                        productSlug: havaianas-flipflops-slim-crystal-poem-blue
+                        variantId: 1
+                        images: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/082322_1_large.jpg
+                        price: 20600
+                      totalPrice:
+                        currencyCode: EUR
+                        centAmount: 20600
+                      totalLineItemQuantity: 4
+                      type: UpdateCart
+  /updateCustomerDetails:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf To Update Customer
+      operationId: updateCustomerDetails
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Update Customer API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Updating customer:
+                summary: Update Customer
+                description: Request Body for Updating customer
+                value:
+                  updateCustomerDetailsAction:
+                    body:
+                      id: 01GW9RPT7QPKPE0ZJ4EYBE1MKH
+                      firstName: Sandeep
+                      lastName: Mishra
+                      email: sandeep@yopmail.com
+        required: true
+      responses:
+        "200":
+          description: Call Broadleaf To Update Customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                updateCustomerDetails:
+                  status: 200
+                  message:
+                    data:
+                      id: 01GW9RPT7QPKPE0ZJ4EYBE1MKH
+                      firstName: Sandeep
+                      lastName: Mishra
+                      username: sandeep@yopmail.com
+                      email: sandeep@yopmail.com
+                      attributes: {}
+                      active: true
+                      contextState:
+                        mutable: true
+                        archived: false
+                        fieldChanges: []
+                        level: null
+                        catalog: null
+                        sandbox: null
+                        application: null
+                        tenant: 5DF1363059675161A85F576D
+                        customerContextId: "2"
+                        baseCatalogId: null
+                        overrideCatalogId: null
+                        sandboxChangeType: null
+                      locked: false
+                      name: Sandeep Mishra
+  /updateCustomerAddress:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Update Customer Address API
+      operationId: updateCustomerAddress
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Update Customer Address API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Updating Customer Address:
+                summary: Change Customer Address
+                description: Request Body for Updating Customer Address
+                value:
+                  id: "1234567890"
+                  addressId: "123456"
+                  city: NORTH POLE
+                  state: AK
+                  country: US
+                  postalCode: "99705"
+                  key: "1234"
+                  mobile: +16788978999
+                  fullName: test test
+                  addressLine1: 356 OLD STEESE HWY
+        required: true
+      responses:
+        "200":
+          description: Call Broadleaf Commerce Update Customer Address successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        addresses:
+                        - id: 92mVaZ5t
+                          city: NORTH POLE
+                          country: US
+                          postalCode: "99705"
+                          key: 6434aed4-d851-4cb3-91af-32611cbde588
+                          mobile: +16788978999
+                          fullName: test test
+                          addressLine1: '356 OLD STEESE HWY '
+                          addressLine2: '  '
+  /signup:
+    post:
+      tags:
+      - broadleaf Customer Signup Controller
+      summary: Call commercetools Signup API.
+      operationId: signup
+      requestBody:
+        description: Details for Login with Password flow Authorization
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Signup:
+                summary: Signup
+                description: Request Body for Signup
+                value:
+                  firstName: John
+                  lastName: Doe
+                  email: john_doe@yopmail.com
+                  password: Password
+        required: true
+      responses:
+        "200":
+          description: Call commercetools Signup API with default Authorization headers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /reviewDetails:
+    post:
+      tags:
+      - Broadleaf Checkout Controller
+      summary: Review details for a cart and payment
+      operationId: reviewDetails
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for reviewing cart and payment
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cartId:
+                  type: string
+                  description: ID of the cart
+                paymentId:
+                  type: string
+                  description: ID of the payment
+            examples:
+              Request Body for Review Details:
+                summary: Review Details
+                description: Request Body for Review Details
+                value:
+                  cartId: sampleCartId
+                  paymentId: samplePaymentId
+        required: true
+      responses:
+        "200":
+          description: Review details request is successful
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ReviewDetailsGenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ReviewDetailsGenericResponse'
+  /resetNewPassword:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Change Reset Password for a user
+      operationId: changeResetPassword
+      requestBody:
+        description: Details for changing the reset password
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Change Reset Password:
+                summary: Reset Password
+                description: Request Body for Change Reset Password
+                value:
+                  username: abcd@yopmail.com
+                  token: sampleToken
+                  password: new_password
+        required: true
+      responses:
+        "200":
+          description: Password Change Request is successful
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /removePaymentByPaymentId:
+    post:
+      tags:
+      - lcsbl-payment-controller
+      operationId: removePaymentByPaymentId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /removeLineItem:
+    post:
+      tags:
+      - Broadleaf Commerce Cart Controller
+      summary: Call Broadleaf Commerce Cart API to Remove Line Item from Cart
+      operationId: removeLineItemFromCart
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Remove Line Item from Cart:
+                summary: Remove Line Item from Cart
+                description: Request Body for Remove Line Item from Cart
+                value:
+                  productId: product1
+                  sku: HS-GG-20
+                  quantity: 1
+                  cartId: 01H521KVQ8D7D00JHHG42V1NVS
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\": \"ddb2e17b-4c52-4edf-aae4-635055d05846\"\
+                ,\"version\": 12,\"totalLineItemQuantity\": null}}"
+  /removeItemFromWishlist:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Remove Item from Wishlist API
+      operationId: removeItemFromItemList
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Remove Item from Wishlist API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Removing Item from Wishlist:
+                summary: Remove Wishlist Item
+                description: Request Body for Removing Item from Wishlist
+                value:
+                  version: 1
+                  id: "1"
+                  lineItemId: 01H6BEPY3AFX510R6DKZC81KZC
+        required: true
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Remove Item from Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        wishlistId: aead1aaa-c532-4190-ba70-fe09cefd34f5
+                        lineItems:
+                        - productId: cb9c3959-67e9-44dd-a738-e73fdb4dfb36
+                          id: 19185cfb-43bb-4147-a617-528f922f8340
+                        message: Item Successfully removed
+  /removeAddressAction:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Delete customer address API
+      operationId: removeCustomerAddress
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Delete customer address API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for remove customer address:
+                summary: Remove Customer Address
+                description: Request Body for remove customer address
+                value:
+                  id: ""
+                  addressId: ""
+        required: true
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Delete customer address API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        id: aead1aaa-c532-4190-ba70-fe09cefd34f5
+                        version: "1"
+  /processCheckout:
+    post:
+      tags:
+      - Broadleaf Checkout Controller
+      summary: Call Broadleaf API of Process checkout.
+      operationId: processCheckout
+      requestBody:
+        description: Details for Broadleaf Commerce Process checkout API.
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for CReatePayment API.:
+                summary: Create Payment
+                description: Request Body for CReatePayment API.
+                value:
+                  processCheckout:
+                    body:
+                      id: 01HFY61NBG4AZQ0J2BQWDX1A7N
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\": \"ddb2e17b-4c52-4edf-aae4-635055d05846\"\
+                ,\"version\": 12,\"totalLineItemQuantity\": 10}}"
+  /passwordResetEmail:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Request Password Reset for a user through email
+      operationId: requestPasswordReset
+      requestBody:
+        description: Details for resetting the password
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Reset Password:
+                summary: Reset Password Email
+                description: Request Body for Reset Password
+                value: "{\"username\":\"abcd@yopmail.com\""
+        required: true
+      responses:
+        "200":
+          description: Password Reset Request is successful
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /moveToWishlist:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Move Item to Wishlist API
+      operationId: moveToWishlist
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Add Item to Wishlist API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Move Item to Wishlist:
+                summary: Move Cart Item To Wishlist
+                description: Request Body for Move Item to Wishlist
+                value:
+                  cartId: 01H6B487BYE01K0XECN7EA1VFJ
+                  lineItemId: 01H6E90FEY40XA1BQCWDDA00KH
+                  id: 01H07HM41W6QJW164283980ARS
+                  productId: product1660
+                  sku: HA-HCOHH-20
+        required: true
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Move Item to Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                cartDetails:
+                  status: 200
+                  message:
+                    data:
+                      data:
+                      - cartId: 01H6TMCMGG5NFW1BSYQ2CR1DFP
+                        customerId: 01GZDY16JTANR308TDCZSF1GRE
+                        cartState: IN_PROCESS
+                        version: 63
+                        totalPrice:
+                          centAmount: 0
+                          currencyCode: USD
+                        subtotal: 0
+                        totalDiscount: 0
+                        totalLineItemQuantity: 0
+                      type: Cart
+                      country: US
+                      shipping: []
+                      itemShippingAddresses: []
+  /moveToCart:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Move Wishlist Item to Cart API
+      operationId: moveToCart
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Move Wishlist Item to Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Move Wishlist Item to Cart:
+                summary: Move To Cart
+                description: Request Body for Move Wishlist Item to Cart
+                value:
+                  cartId: 01H6B487BYE01K0XECN7EA1VFJ
+                  lineItemId: 01H6E90FEY40XA1BQCWDDA00KH
+                  id: 01H07HM41W6QJW164283980ARS
+                  productId: product1660
+                  sku: HA-HCOHH-20
+                  quantity: 1
+        required: true
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Move Wishlist Item to Cart API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                wishlistDetails:
+                  status: 200
+                  message:
+                    data:
+                      response:
+                        total: 1
+                        data:
+                        - name: My Wishlist
+                          version: "1"
+                          wishlistId: 01H07HM41W6QJW164283980ARS
+                          lineItems:
+                          - productId: product1660
+                            id: 01H6E90FR8Y8D90825JJBQ09PA
+                            quantity: "1"
+                            productSlug: official-hat1660
+                            description: null
+                            productType: STANDARD
+                            name: 1660 Heat Clinic Official Holiday Hat
+                            price: "13.5"
+                            currency: USD
+  /logout:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Logout API
+      operationId: logout
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Logout API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    message: Customer Logout Successfully
+  /login:
+    post:
+      tags:
+      - lcsblc-login-controller
+      summary: Call Broadleaf Login API with Password flow Authorization
+      operationId: loginMain
+      requestBody:
+        description: Details for Login with Password flow Authorization
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Login:
+                summary: Login
+                description: Request Body for Login
+                value:
+                  username: johndoe@example.com
+                  password: Test
+        required: true
+      responses:
+        "200":
+          description: Call Broadleaf Login API with Password flow Authorization is
+            successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /getPaymentByPaymentId:
+    post:
+      tags:
+      - lcsbl-payment-controller
+      operationId: getPaymentByPaymentId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /getFulFillmentOptions:
+    post:
+      tags:
+      - lcsbl-ful-fillment-option-controller
+      operationId: getFulFillmentOptions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /deleteWishlist:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Delete Wishlist API
+      operationId: deleteItemList
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Delete Wishlist API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Delete Wishlist:
+                summary: Delete Wishlist
+                description: Request Body for Delete Wishlist
+                value:
+                  id: "1"
+        required: true
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Delete Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        id: aead1aaa-c532-4190-ba70-fe09cefd34f5
+                        version: "1"
+  /createWishlist:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Create Wishlist API
+      operationId: createWishlist
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Create Wishlist API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        id: "1"
+                        name: My Shopping list 4
+  /createPayment:
+    post:
+      tags:
+      - lcsbl-payment-controller
+      summary: Call Broadleaf Commerce CreatePayment API.
+      operationId: createPayment
+      requestBody:
+        description: Details for Broadleaf Commerce Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for CReatePayment API.:
+                summary: Create Payment
+                description: Request Body for CReatePayment API.
+                value:
+                  createPayment:
+                    body:
+                      id: 01HFY61NBG4AZQ0J2BQWDX1A7N
+                      name: Divyank
+                      gatewayType: STRIPE
+                      amount:
+                        amount: 12.59
+                        currency: USD
+                      stripePaymentMethodId: pm_1OFySMKiGiSDImh2XD3Bbmf9
+                      billingAddress:
+                        firstName: Divyank
+                        lastName: Chav
+                        fullName: Divyank Chav
+                        emailAddress: divyank@yopmail.com
+                        companyName: Logixal
+                        addressLine1: Sakinaka
+                        addressLine2: vfgt
+                        city: Mumbai
+                        country: INDIA
+                        postalCode: "401209"
+                        phonePrimary:
+                          countryCode: "91"
+                          phoneNumber: "9284423120"
+                        isActive: true
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\": \"ddb2e17b-4c52-4edf-aae4-635055d05846\"\
+                ,\"version\": 12,\"totalLineItemQuantity\": 10}}"
+  /applyOfferCodeToCart:
+    post:
+      tags:
+      - Broadleaf Offer Controller
+      summary: Call Broadleaf Commerce Cart API to Apply Offer Code to Cart
+      operationId: applyOfferCode
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Apply Offer Code to Cart:
+                summary: Apply Offer Code to Cart
+                description: Request Body for Apply Offer Code to Cart
+                value:
+                  productId: product1
+                  sku: HS-GG-20
+                  quantity: 1
+                  cartId: 01H521KVQ8D7D00JHHG42V1NVS
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\": \"ddb2e17b-4c52-4edf-aae4-635055d05846\"\
+                ,\"version\": 12,\"totalLineItemQuantity\": 10}}"
+  /addToCart:
+    post:
+      tags:
+      - Broadleaf Commerce Cart Controller
+      summary: Call Broadleaf Commerce Cart API to Add Line Item to Cart
+      operationId: addToCart
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Add Line Item to Cart:
+                summary: Add Line Item to Cart
+                description: Request Body for Add Line Item to Cart
+                value:
+                  productId: product1
+                  sku: HS-GG-20
+                  quantity: 1
+                  cartId: 01H521KVQ8D7D00JHHG42V1NVS
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\": \"ddb2e17b-4c52-4edf-aae4-635055d05846\"\
+                ,\"version\": 12,\"totalLineItemQuantity\": 10}}"
+  /addItemToWishlist:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Add Item to Wishlist API
+      operationId: addItemsToItemList
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Add Item to Wishlist API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Adding Items to Wishlist:
+                summary: Add Wishlist Item
+                description: Request Body for Adding Items to Wishlist
+                value:
+                  version: 1
+                  id: "1"
+                  productId: product1
+        required: true
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Add Item to Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        wishlistId: 01H07HM41W6QJW164283980ARS
+                        lineItems:
+                        - id: 01H6BEPY3AFX510R6DKZC81KZC
+                          quantity: 1
+                          productId: product1541
+                        message: Added to wishlist
+  /addCustomerAddress:
+    post:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Add new Customer Address API
+      operationId: addCustomerAddress
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Commerce Add new Customer Address API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Adding new Customer Address:
+                summary: Add new Customer Address
+                description: Request Body for Adding new Customer Address
+                value:
+                  id: "1234567890"
+                  city: NORTH POLE
+                  state: AK
+                  country: US
+                  postalCode: "99705"
+                  key: "1234"
+                  mobile: +16788978999
+                  fullName: test test
+                  addressLine1: 356 OLD STEESE HWY
+        required: true
+      responses:
+        "200":
+          description: Call Broadleaf Commerce Add new Customer Address successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        addresses:
+                        - id: 92mVaZ5t
+                          city: NORTH POLE
+                          country: US
+                          postalCode: "99705"
+                          key: 6434aed4-d851-4cb3-91af-32611cbde588
+                          mobile: +16788978999
+                          fullName: test test
+                          addressLine1: '356 OLD STEESE HWY '
+                          addressLine2: '  '
+  /viewCart:
+    get:
+      tags:
+      - Broadleaf Commerce Cart Controller
+      summary: Call Broadleaf Commerce Cart API to get Cart Details
+      operationId: viewCart
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      - name: cartId
+        in: query
+        description: ID of the cart
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\":\"01H521KVQ8D7D00JHHG42V1NVS\",\"customerId\"\
+                :null,\"cartState\":\"IN_PROCESS\",\"version\":9,\"lineItems\":[{\"\
+                id\":\"01H521KW77BVY80S7RD3PH0SES\",\"productId\":\"product2\",\"\
+                name\":\"SuddenDeathSauce\",\"variantId\":\"HS-SUDS-20\",\"images\"\
+                :\"/api/asset/content/Sudden-Death-Sauce-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D\"\
+                ,\"price\":10.99,\"quantity\":1,\"discountPrice\":10.99,\"discountededAmount\"\
+                :0}],\"totalPrice\":{\"centAmount\":40.96,\"currencyCode\":\"USD\"\
+                },\"subtotal\":40.96,\"totalDiscount\":0,\"totalLineItemQuantity\"\
+                :4,\"type\":\"Cart\",\"country\":\"US\",\"shipping\":[],\"itemShippingAddresses\"\
+                :[]}}"
+  /order:
+    get:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Customer API
+      operationId: getOrderByOrderId
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      - name: orderId
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf My Orders API
+        content:
+          application/json: {}
+      responses:
+        "200":
+          description: Call to Broadleaf orders API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                orderDetails:
+                  status: 200
+                  message:
+                    data:
+                      order:
+                        id: 01H68EV9P96WTG0Y512RGE011B
+                        orderNumber: 01H68EV6NA9ASX1M4WKS6M0ZJM
+                        orderSubmittedDate: 2023-07-26T06:40:38.058Z
+                        orderState: SUBMITTED
+                        customerEmail: Akshay
+                        shippingGroup:
+                        - lineItems:
+                          - state: NEW
+                            id: 01H68EV96G3QAB1FYDEM8N02VV
+                            variant:
+                              images: "https://192.168.15.236:8456/api/asset/content/Hoppin-Hot-Sauce-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                              sku: HS-HHS-20
+                            name: Hoppin' Hot Sauce
+                            quantity: 1
+                            price:
+                              amount: 8.09
+                              currency: USD
+                            includedDiscounts:
+                            - 10% BFF discount on Item
+                          - id: 01H68EV96B8YY6175Q87M30KY5
+                            variant:
+                              images: "https://192.168.15.236:8456/api/asset/content/Hoppin-Hot-Sauce-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                              sku: HS-HHS-20
+                            name: Hoppin' Hot Sauce
+                            quantity: 1
+                            price:
+                              amount: 8.09
+                              currency: USD
+                            includedDiscounts:
+                            - 10% BFF discount on Item
+                          shippingMethod: Standard
+                          shippingAddress:
+                            firstName: Akshay Joshi
+                            addressLine1: 100 Main Street
+                            addressLine2: ""
+                            city: Boston
+                            state: MA
+                            country: US
+                            postalCode: "02129"
+                          shippingPrice:
+                            amount: 8.46
+                            currency: USD
+                        subtotal:
+                          amount: 17.98
+                          currency: USD
+                        totalPrice:
+                          amount: 23.02
+                          currency: USD
+                        taxes:
+                          amount: 0
+                          currency: USD
+                        totalShippingPrice:
+                          amount: 8.46
+                          currency: USD
+                        discountPrice:
+                          amount: 3.42
+                          currency: USD
+                          includedDiscounts:
+                          - 10% off BFF Discount on order
+                        payment:
+                          cardNum: '***1111'
+                          mode: VISA
+                        billingAddress:
+                          firstName: AJ
+                          city: New York
+                          state: ""
+                          country: US
+                          postalCode: "10007"
+                          lastName: Doe
+                          addressLine1: 100 Maytown street
+                          addressLine2: ""
+  /getWishlist:
+    get:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Wishlist API
+      operationId: getCustomerItemList
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Wishlist Items API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    data:
+                    - name: My Wishlist
+                      version: "1"
+                      wishlistId: "1"
+                      lineItems:
+                      - productId: product1
+                        id: "123"
+                        quantity: "1"
+                        description: "Made with Naga Bhut Jolokia, the World's Hottest\
+                          \ pepper."
+                        productType: STANDARD
+                        name: Green Ghost
+                        images: "https://localhost:8080/api/asset/content/Green-Ghost-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+  /getWishlistItems:
+    get:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Wishlist Items API
+      operationId: getCustomerItemListItemsByItemListId
+      parameters:
+      - name: wishListId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Wishlist Items API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    data:
+                    - name: My Wishlist
+                      version: "1"
+                      wishlistId: "1"
+                      lineItems:
+                      - productId: product1
+                        id: "123"
+                        quantity: "1"
+                        description: "Made with Naga Bhut Jolokia, the World's Hottest\
+                          \ pepper."
+                        productType: STANDARD
+                        name: Green Ghost
+                        images: "https://localhost:8080/api/asset/content/Green-Ghost-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+  /getShippingMethods:
+    get:
+      tags:
+      - Broadleaf Checkout Controller
+      summary: Call Broadleaf API to get Shipping Methods
+      operationId: getShippingMethods
+      parameters:
+      - name: cartId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: refNo
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf API
+        content:
+          application/json: {}
+      responses:
+        "200":
+          description: Call Broadleaf API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    shippingOptions:
+                    - shippingMethod: Standard US
+                      description: Delivery in 5-6 working days
+                      price: 300
+                      currency: USD
+                    - shippingMethod: NewShipping
+                      description: Delivery in 5-6 working days
+                      price: 300
+                      currency: EUR
+                    - shippingMethod: Express US
+                      description: Same day delivery
+                      price: 1000
+                      currency: USD
+                    - shippingMethod: Express EU
+                      description: Same day delivery
+                      price: 1000
+                      currency: EUR
+  /getCustomerAddress:
+    get:
+      tags:
+      - Broadleaf Checkout Controller
+      summary: Call Broadleaf API to get Customer Address
+      operationId: getCustomerAddress
+      parameters:
+      - name: customerId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf API
+        content:
+          application/json: {}
+      responses:
+        "200":
+          description: Call Broadleaf API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    customerAddress:
+                    - id: 01GZDY16JTANR308TDCZSF1GRE
+                      firstName: 'Shivam Srivastava '
+                      streetNumber: "12"
+                      city: dr
+                      state: rf
+                      country: US
+                      postalCode: "233236"
+                      phone: "8851202323"
+                      lastName: ""
+                    - id: 01H4NTVZJNFGSN13PG2W7F0YV9
+                      name: Akshay Boston
+                      firstName: Akshay Joshi
+                      streetNumber: 100 Main Street
+                      streetName: ""
+                      city: Boston
+                      state: MA
+                      country: US
+                      postalCode: "02129"
+                      phone: "47368463276"
+                      lastName: ""
+                    - id: 01H4ZAAKZ0XA920CTN3YXA0PYN
+                      name: Work
+                      firstName: Test Test
+                      streetNumber: 123 South Figueroa Street
+                      streetName: ""
+                      city: Chicago
+                      state: IL
+                      country: US
+                      postalCode: "60601"
+                      phone: +11234567890
+                      lastName: ""
+                    - id: 01H52E18R7GST51BF96WRH0CDJ
+                      name: john
+                      firstName: John
+                      streetNumber: 100 opt
+                      streetName: apt 200
+                      city: Metuchen
+                      state: CA
+                      country: ES
+                      postalCode: "233233"
+                      phone: "98989898989"
+                      lastName: ""
+                    - id: 01H52E7ZEDNSEW0HMZXVMX0SH9
+                      name: john
+                      firstName: John
+                      streetNumber: 100 opt
+                      streetName: apt 200
+                      city: Metuchen
+                      state: CA
+                      country: ES
+                      postalCode: "233233"
+                      phone: "98989898989"
+                      lastName: ""
+                    - id: 01H52EN9CK5G361TR59T830132
+                      name: john
+                      firstName: John
+                      streetNumber: 100 opt
+                      streetName: apt 200
+                      city: Metuchen
+                      state: CA
+                      country: ES
+                      postalCode: "233233"
+                      phone: "98989898989"
+                      lastName: ""
+                    - id: 01H52F9TVN38EK0CA8WW0F0419
+                      name: john
+                      firstName: Test
+                      streetNumber: 100 opt
+                      streetName: apt 200
+                      city: Metuchen
+                      state: CA
+                      country: ES
+                      postalCode: "233233"
+                      phone: "98989898989"
+                      lastName: ""
+                    - id: 01H54DG42V305400H7PKKM0EF6
+                      name: john
+                      firstName: Test
+                      streetNumber: 100 opt
+                      streetName: apt 200
+                      city: Metuchen
+                      state: CA
+                      country: ES
+                      postalCode: "233233"
+                      phone: "98989898989"
+                      lastName: ""
+  /customer/orders:
+    get:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Customer API
+      operationId: getOrdersByCustomerId
+      parameters:
+      - name: offset
+        in: query
+        description: offset for pagination
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: pageSize
+        in: query
+        description: pageSize for pagination
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf My Orders API
+        content:
+          application/json: {}
+      responses:
+        "200":
+          description: Call to Broadleaf orders API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                responseCode: 200
+                results:
+                  orders:
+                    total: 559
+                    offset: 0
+                    count: 10
+                    results:
+                    - orderDate: 2023-05-04T08:51:08.774Z
+                      orderId: e7aff158-c243-4bbd-9302-2f05bbea8990
+                      orderState: Open
+                      lineItems:
+                      - images: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/082793_1_medium.jpg
+                        quantity: 1
+                        name: Product Name
+                        id: 7a8c9bae-e43c-447b-9e6a-09d782799f2e
+                        price:
+                          value:
+                            centAmount: 17250
+                            currencyCode: EUR
+                            fractionDigits: 2
+                        productId: dae72be8-ede0-4f44-b45c-2e739a60d406
+                    - orderDate: 2023-05-04T08:51:08.773Z
+                      orderId: c6753f30-9fb4-4b46-8b0c-682e02a18602
+                      orderState: Open
+                      lineItems:
+                      - images: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/072014_1_large.jpg
+                        quantity: 1
+                        name: Product Name
+                        id: 5561be90-6704-424b-b9b9-f57913649890
+                        price:
+                          value:
+                            centAmount: 11250
+                            currencyCode: EUR
+                            fractionDigits: 2
+                        productId: a6fe812e-246e-4aaf-90d4-4c14c0d8ba7b
+  /customer-details/addresses:
+    get:
+      tags:
+      - lcsblc-customer-controller
+      summary: Call Broadleaf Commerce Customer Address API
+      operationId: getCustomerAddressByCustomerId
+      parameters:
+      - name: customerId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Broadleaf Customer Address API
+        content:
+          application/json: {}
+      responses:
+        "200":
+          description: Call to Broadleaf Commerce Customer address API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                responseCode: 200
+                results:
+                  response:
+                    data:
+                      addresses:
+                      - id: "123456"
+                        addressLine1: 100 Main Street
+                        addressLine2: ""
+                        postalCode: "02129"
+                        city: Boston
+                        country: US
+                        state: MA
+                        key: Home
+                        fullName: Test Test
+components:
+  schemas:
+    Errors:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GenericResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Errors'
+        message:
+          $ref: '#/components/schemas/GenericResults'
+    GenericResults:
+      type: object
+      properties:
+        data:
+          type: object
+    ReviewDetailsGenericResponse:
+      type: object
+      properties:
+        cartDetails:
+          $ref: '#/components/schemas/GenericResponse'
+        paymentDetails:
+          $ref: '#/components/schemas/GenericResponse'

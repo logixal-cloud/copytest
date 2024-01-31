@@ -1,0 +1,1658 @@
+openapi: 3.0.1
+info:
+  title: LCS-BFF-Stateful-CT
+  description: APIs for LCS-BFF-Stateful-CT.
+  version: "1.0"
+servers:
+- url: http://192.168.15.185:5002/api/stateful
+  description: Generated server url
+tags:
+- name: Commerce Tool Offer Controller
+  description: This controller calls Commerce Tool Discount APIs
+- name: Commerce Tool Cart Controller
+  description: This controller calls Commerce Tool Cart APIs
+- name: commercetool Customer Signup Controller
+  description: This controller call Commerce Tool Customer Signup.
+- name: Commerce Tool Login Controller
+  description: This controller call Commerce Tool Login API with Password flow Authorization
+paths:
+  /updateShippingAddress:
+    post:
+      tags:
+      - lcsct-checkout-controller
+      summary: Call Commerce Tool API to update Shipping Address
+      operationId: updateShippingAddress
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Update Shipping request:
+                description: Update Shipping request
+                value:
+                  updateShippingAddressAction:
+                    body:
+                      cartId: 5fd0a56c-8679-49d2-98a3-a51954f3e1be
+                      firstName: Shailendra1
+                      lastName: Singh
+                      streetName: 1 Apple
+                      streetNumber: Park Way
+                      city: IN
+                      country: DE
+                      postalCode: "95014"
+                      phone: "05686856866"
+                      shippingMethodId: 0a9bfb3c-a4cf-4535-8e1c-4532b11f324d
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                shippingDetails:
+                  status: 200
+                  message:
+                    data:
+                      shippingDetails:
+                        key: null
+                        firstName: Shailendra1
+                        lastName: Singh
+                        streetName: 1 Apple
+                        streetNumber: Park Way
+                        city: IN
+                        country: DE
+                        postalCode: "95014"
+                        phone: "05686856866"
+                        shippingMethodName: Express EU
+                        amount: 10.0
+                        currency: EUR
+  /updateLineItem:
+    post:
+      tags:
+      - Commerce Tool Cart Controller
+      summary: Call Commerce Tool Cart API to Update Cart Line Item
+      operationId: updateCartLineItem
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Update Cart Line Item:
+                summary: Update Cart Line Item
+                description: Request Body for Update Cart Line Item
+                value:
+                  id: 01H6B487BYE01K0XECN7EA1VFJ
+                  lineItemId: 01H6BHM8QNMW2510JV89TF0CW7
+                  quantity: "2"
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                responseCode: 200
+                cartDetails:
+                  responseCode: 200
+                  results:
+                    data:
+                    - cartId: ff921929-fe87-443b-b12a-4ad16b20d267
+                      customerId: 5a0ff890-b219-4dc4-9c14-1cb0e64e8999
+                      anonymousId: null
+                      version: 19
+                      lineItems:
+                      - id: 18296021-df33-406d-b6b6-8cdfe421b495
+                        quantity: 4
+                        productId: 55e4a37a-145d-4ee0-bf05-90828a0d8454
+                        productKey: "82322"
+                        name: FlipFlops“SlimCrystalPoem“Havaianasblue
+                        productSlug: havaianas-flipflops-slim-crystal-poem-blue
+                        variantId: 1
+                        images: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/082322_1_large.jpg
+                        price: 20600
+                      totalPrice:
+                        currencyCode: EUR
+                        centAmount: 20600
+                      totalLineItemQuantity: 4
+                      type: UpdateCart
+  /updateLineItemShippingAddress:
+    post:
+      tags:
+      - Commerce Tool Cart Controller
+      operationId: updateLineItemShippingAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /updateCustomerDetails:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool To Update Customer
+      operationId: updateCustomerDetails
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Update Customer API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Updating customer:
+                summary: Update Customer
+                description: Request Body for Updating customer
+                value:
+                  updateCustomerDetailsAction:
+                    body:
+                      id: 5aea8aa6-1fc3-4b11-bc19-f7d2f4966521
+                      firstName: 'Shailendra '
+                      lastName: Singh
+                      dateOfBirth: 1991-01-01
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool To Update Customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                updateCustomerDetails:
+                  status: 200
+                  message:
+                    data:
+                      data:
+                        updateCustomer:
+                          id: 5aea8aa6-1fc3-4b11-bc19-f7d2f4966521
+                          firstName: 'Shailendra '
+                          lastName: Singh
+                          dateOfBirth: 1988-01-01
+  /updateCustomerAddress:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Update Customer Address API
+      operationId: updateCustomerAddress
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Update Customer Address API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Updating Customer Address:
+                summary: Change Customer Address
+                description: Request Body for Updating Customer Address
+                value:
+                  id: "1234567890"
+                  addressId: "123456"
+                  city: NORTH POLE
+                  state: AK
+                  country: US
+                  postalCode: "99705"
+                  key: "1234"
+                  mobile: +16788978999
+                  fullName: test test
+                  addressLine1: 356 OLD STEESE HWY
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Update Customer Address successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        addresses:
+                        - id: 92mVaZ5t
+                          city: NORTH POLE
+                          country: US
+                          postalCode: "99705"
+                          key: 6434aed4-d851-4cb3-91af-32611cbde588
+                          mobile: +16788978999
+                          fullName: test test
+                          addressLine1: '356 OLD STEESE HWY '
+                          addressLine2: '  '
+  /storedPaymentMethods:
+    post:
+      tags:
+      - lcsct-adyen-payment-controller
+      operationId: storedPaymentMethods
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /signup:
+    post:
+      tags:
+      - commercetool Customer Signup Controller
+      summary: Call commercetools Signup API.
+      operationId: signup
+      requestBody:
+        description: Details for Login with Password flow Authorization
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Signup:
+                summary: Signup
+                description: Request Body for Signup
+                value:
+                  firstName: John
+                  lastName: Doe
+                  email: john_doe@yopmail.com
+                  password: Password
+        required: true
+      responses:
+        "200":
+          description: Call commercetools Signup API with default Authorization headers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /reviewDetails:
+    post:
+      tags:
+      - lcsct-checkout-controller
+      summary: Review details for a cart and payment
+      operationId: reviewDetails
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for reviewing cart and payment
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cartId:
+                  type: string
+                  description: ID of the cart
+                paymentId:
+                  type: string
+                  description: ID of the payment
+            examples:
+              Request Body for Review Details:
+                summary: Review Details
+                description: Request Body for Review Details
+                value:
+                  cartId: sampleCartId
+                  paymentId: samplePaymentId
+        required: true
+      responses:
+        "200":
+          description: Review details request is successful
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ReviewDetailsGenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ReviewDetailsGenericResponse'
+  /resetPassword:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Reset Password API
+      operationId: resetPassword
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Generating Reset Password Token API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Reset Password:
+                summary: Reset Password
+                description: Request Body for Reset Password
+                value:
+                  token: zEv-asKjkABqoiJbOeB45AAdJDRGavO2XbQE0ZF-
+                  newPassword: YW5hbmQxMjM=
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Reset Password successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                resetPasswordAction:
+                  status: 200
+                  message:
+                    data:
+                      id: 64c826c2-2e27-4f47-a59f-abb8ee43c328
+  /resetPasswordToken:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Generate Reset Password Token API
+      operationId: resetPasswordToken
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Generating Reset Password Token API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Reset Password Token:
+                summary: Generates Reset Password Token
+                description: Request Body for Reset Password Token
+                value:
+                  email: anand2@test.com
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Generate Reset Password Token successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                resetPasswordTokenAction:
+                  status: 200
+                  message:
+                    data:
+                      id: 64c826c2-2e27-4f47-a59f-abb8ee43c328
+                      tokenValue: zEv-asKjkABqoiJbOeB45AAdJDRGavO2XbQE0ZF-
+  /removePaymentByPaymentId:
+    post:
+      tags:
+      - lcsct-payment-controller
+      operationId: removePaymentByPaymentId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /removeLineItem:
+    post:
+      tags:
+      - Commerce Tool Cart Controller
+      summary: Call Commerce Tool Cart API to Remove Line Item from Cart
+      operationId: removeLineItemFromCart
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Remove Line Item from Cart:
+                summary: Remove Line Item from Cart
+                description: Request Body for Remove Line Item from Cart
+                value:
+                  cartId: ddb2e17b-4c52-4edf-aae4-635055d05846
+                  productId: 4cc8b76c-487c-405c-aa98-937f0927cb80
+                  quantity: 1
+                  variantId: 1
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\": \"ddb2e17b-4c52-4edf-aae4-635055d05846\"\
+                ,\"version\": 12,\"totalLineItemQuantity\": 10}}"
+  /removeItemFromWishlist:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Remove Item from Wishlist API
+      operationId: removeItemFromShoppingList
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Add Item to Wishlist API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Removing Items from Wishlist:
+                summary: Remove Wishlist Item
+                description: Request Body for Removing Items from Wishlist
+                value:
+                  version: 1
+                  id: "1"
+                  lineItemId: 19185cfb-43bb-4147-a617-528f922f8340
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Remove Item from Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        wishlistId: aead1aaa-c532-4190-ba70-fe09cefd34f5
+                        lineItems:
+                        - productId: cb9c3959-67e9-44dd-a738-e73fdb4dfb36
+                          id: 19185cfb-43bb-4147-a617-528f922f8340
+                        message: Item Successfully removed
+  /removeCustomerAddress:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool To remove Customer address.
+      operationId: removeCustomerAddress
+      requestBody:
+        description: Details for Commerce Tool Remove Customer address API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for removing customer address:
+                summary: Remove Customer Address
+                description: Request Body for removing customer address
+                value:
+                  removeAddressAction:
+                    body:
+                      id: 01GW9RPT7QPKPE0ZJ4EYBE1MKH
+                      addressId: 01HDR65EQ108NR13RM19HE0PA3
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool To Remove Customer address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                updateCustomerDetails:
+                  status: 200
+                  message:
+                    data:
+                      data:
+                        updateCustomer:
+                          id: 5aea8aa6-1fc3-4b11-bc19-f7d2f4966521
+                          firstName: 'Shailendra '
+                          lastName: Singh
+                          dateOfBirth: 1988-01-01
+  /processCheckout:
+    post:
+      tags:
+      - lcsct-order-controller
+      operationId: createOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /moveToWishlist:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Move Item to Wishlist API
+      operationId: moveToWishlist
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Move Item to Wishlist API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Move Item to Wishlist:
+                summary: Move To Wishlist
+                description: Request Body for Move Item to Wishlist
+                value:
+                  cartId: ff921929-fe87-443b-b12a-4ad16b20d267
+                  lineItemId: abd24e49-610f-452d-af2a-2bfd660dac4a
+                  id: aead1aaa-c532-4190-ba70-fe09cefd34f5
+                  productId: 4c0367af-8bb0-474b-b3d5-4a6327094137
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Move Item to Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                cartDetails:
+                  status: 200
+                  message:
+                    data:
+                      data:
+                      - cartId: ff921929-fe87-443b-b12a-4ad16b20d267
+                        customerId: 5a0ff890-b219-4dc4-9c14-1cb0e64e8999
+                        anonymousId: null
+                        version: 91
+                        cartState: Active
+                        totalPrice:
+                          currencyCode: EUR
+                          centAmount: 0
+                        totalLineItemQuantity: null
+                        shippingMode: Single
+                        type: Cart
+                        country: DE
+                        shipping: []
+                        itemShippingAddresses: []
+  /moveToCart:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Move Wishlist Item to Cart API
+      operationId: moveToCart
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Move Wishlist Item to Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Move Wishlist Item to Cart:
+                summary: Move To Cart
+                description: Request Body for Move Wishlist Item to Cart
+                value:
+                  cartId: ff921929-fe87-443b-b12a-4ad16b20d267
+                  lineItemId: 69bafc2a-1278-4759-9001-927b089da8fe
+                  id: aead1aaa-c532-4190-ba70-fe09cefd34f5
+                  productId: 55e4a37a-145d-4ee0-bf05-90828a0d8454
+                  variantId: 1
+                  quantity: 1
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Move Wishlist Item to Cart API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"cartDetails\":{\"status\":200,\"message\":{\"data\":{\"\
+                response\":{\"total\":1,\"data\":[{\"wishlistId\":\"aead1aaa-c532-4190-ba70-fe09cefd34f5\"\
+                ,\"name\":\"My shopping list\",\"version\":41,\"customerId\":\"5a0ff890-b219-4dc4-9c14-1cb0e64e8999\"\
+                ,\"lineItems\":[{\"productId\":\"4c0367af-8bb0-474b-b3d5-4a6327094137\"\
+                ,\"id\":\"9554c4c3-239b-423c-a8dc-d4fd7bc90178\",\"quantity\":1,\"\
+                name\":\"Jeans Monroe Dondup blue\",\"productSlug\":\"dondup-jeans-monroe-P692DS138DG99-blue\"\
+                ,\"productType\":\"ce4ac531-20cc-4bd7-a930-b44d9b35d25b\",\"images\"\
+                :\"https//s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/079484_1_large.jpg\"\
+                ,\"price\":240,\"currency\":\"EUR\"},{\"productId\":\"cb9c3959-67e9-44dd-a738-e73fdb4dfb36\"\
+                ,\"id\":\"6507e7be-f1d4-405b-b806-8ab1006a6453\",\"quantity\":1,\"\
+                name\":\"T-Shirt Majestic Filatures grey\",\"productSlug\":\"majestic-filatures-tshirt-E151704-grey\"\
+                ,\"productType\":\"ce4ac531-20cc-4bd7-a930-b44d9b35d25b\",\"images\"\
+                :\"https:\\s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081410_1_large.jpg\"\
+                ,\"price\":136.25,\"currency\":\"EUR\"}]}]}}}}}"
+  /logout:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Revoke Token API for Logout
+      operationId: logout
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Call Commerce Tool Revoke Token API for Logout successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    message: Customer Logout Successfully
+  /login:
+    post:
+      tags:
+      - Commerce Tool Login Controller
+      summary: Call Commerce Tool Login API with Password flow Authorization
+      operationId: login
+      requestBody:
+        description: Details for Login with Password flow Authorization
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Login:
+                summary: Login
+                description: Request Body for Login
+                value:
+                  username: johndoe@example.com
+                  password: Test
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Login API with Password flow Authorization
+            is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /getPaymentByPaymentId:
+    post:
+      tags:
+      - lcsct-payment-controller
+      operationId: getPaymentByPaymentId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /editStoredPaymentMethod:
+    post:
+      tags:
+      - lcsct-adyen-payment-controller
+      operationId: editStoredPaymentMethod
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /deleteWishlist:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Delete Wishlist API
+      operationId: deleteShoppingList
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Delete Wishlist API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Deleting Wishlist:
+                summary: Delete Wishlist
+                description: Request Body for Deleting Wishlist
+                value:
+                  id: "1"
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Delete Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        id: aead1aaa-c532-4190-ba70-fe09cefd34f5
+                        version: "1"
+  /deleteStoredPaymentMethod:
+    post:
+      tags:
+      - lcsct-adyen-payment-controller
+      operationId: deleteStoredPaymentMethod
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /createWishlist:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Create Customer Wishlist API
+      operationId: createWishlist
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Create Wishlist API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Creating Wishlist:
+                summary: Create Wishlist
+                description: Request Body for Creating Wishlist
+                value:
+                  wishlistName: My Shopping list 4
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Customer Create Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        id: "1"
+                        name: My Shopping list 4
+  /createSession:
+    post:
+      tags:
+      - lcsct-adyen-payment-controller
+      operationId: createAdyenSession
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /createReview:
+    post:
+      tags:
+      - reviews-controller
+      summary: Call to commercetools Create review API to reate a new review for product
+      operationId: createReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: "Call to CommerceTools Customer, Create Review API successful\
+            \ <br><br><b>Note:</b> Call to API is successful or unsuccessful, same\
+            \ status code of 200 is returned. Differentiation between different errors\
+            \ can be done based on the error codes in response.\""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                createReviewAction:
+                  status: 200
+                  message:
+                    data:
+                      reviewDetails:
+                        id: 04bfd099-6cb5-406c-ac32-3e74ec1ec419
+                        createdAt: 2024-01-12T09:51:55.931Z
+                        customerName: Prathamesh Indulkar
+                        rating: 5
+                        reviewTitle: Good tshirt and fits well
+                        review: Its a good tshirt and good quality fabric.
+  /createPayment:
+    post:
+      tags:
+      - lcsct-payment-controller
+      operationId: createPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /changePassword:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Change Password API
+      operationId: changePassword
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Change Password API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Change Password:
+                summary: Change Password
+                description: Request Body for Change Password
+                value:
+                  currentPassword: YW5hbmQxMjM=
+                  newPassword: YW5hbmQxMjM0
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Change Password successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                changePasswordAction:
+                  status: 200
+                  message:
+                    data:
+                      id: 64c826c2-2e27-4f47-a59f-abb8ee43c328
+  /applyOfferCodeToCart:
+    post:
+      tags:
+      - Commerce Tool Offer Controller
+      summary: Call Commerce Tool API to Apply Offer code to Cart
+      operationId: applyOfferCodeToCart
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Apply Discount API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Apply Offer code to Cart:
+                summary: Apply Offer Code to Cart
+                description: Request Body for Apply Offer code to Cart
+                value:
+                  cartId: ddb2e17b-4c52-4edf-aae4-635055d05846
+                  productId: 4cc8b76c-487c-405c-aa98-937f0927cb80
+                  quantity: 1
+                  variantId: 1
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\": \"ddb2e17b-4c52-4edf-aae4-635055d05846\"\
+                ,\"version\": 12,\"totalLineItemQuantity\": 10}}"
+  /addToCart:
+    post:
+      tags:
+      - Commerce Tool Cart Controller
+      summary: Call Commerce Tool Cart API to Add Line Item to Cart
+      operationId: addToCart
+      requestBody:
+        description: Details for Commerce Tool Cart API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Add Line Item to Cart:
+                summary: Add Line Item to Cart
+                description: Request Body for Add Line Item to Cart
+                value:
+                  cartId: ddb2e17b-4c52-4edf-aae4-635055d05846
+                  productId: 4cc8b76c-487c-405c-aa98-937f0927cb80
+                  quantity: 1
+                  variantId: 1
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\": \"ddb2e17b-4c52-4edf-aae4-635055d05846\"\
+                ,\"version\": 12,\"totalLineItemQuantity\": 10}}"
+  /addItemToWishlist:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Add Item to Wishlist API
+      operationId: addItemsToShoppingList
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Add Item to Wishlist API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Adding Items to Wishlist:
+                summary: Add Wishlist Item
+                description: Request Body for Adding Items to Wishlist
+                value:
+                  version: 1
+                  id: "1"
+                  productId: product1
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Add Item to Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        wishlistId: "1"
+                        name: My shopping list
+                        version: 1
+                        lineItems:
+                        - productId: p1
+                          id: "2"
+                          quantity: 1
+                        message: Added to wishlist
+  /addCustomerAddress:
+    post:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Add new Customer Address API
+      operationId: addCustomerAddress
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool Add new Customer Address API
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Request Body for Adding new Customer Address:
+                summary: Add new Customer Address
+                description: Request Body for Adding new Customer Address
+                value:
+                  id: "1234567890"
+                  city: NORTH POLE
+                  state: AK
+                  country: US
+                  postalCode: "99705"
+                  key: "1234"
+                  mobile: +16788978999
+                  fullName: test test
+                  addressLine1: 356 OLD STEESE HWY
+        required: true
+      responses:
+        "200":
+          description: Call Commerce Tool Add new Customer Address successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      data:
+                        addresses:
+                        - id: 92mVaZ5t
+                          city: NORTH POLE
+                          country: US
+                          postalCode: "99705"
+                          key: 6434aed4-d851-4cb3-91af-32611cbde588
+                          mobile: +16788978999
+                          fullName: test test
+                          addressLine1: '356 OLD STEESE HWY '
+                          addressLine2: '  '
+  /wishlist:
+    get:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Get Customer Wishlist API
+      operationId: getCustomerWishlistById
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Call Commerce Tool Customer Get Wishlist API successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    response:
+                      total: 1
+                      data:
+                      - wishlistId: "1234567890"
+                        name: My shopping list
+                        version: 1
+                        customerId: "1"
+                        lineItems:
+                        - productId: p1
+                          id: "12345"
+                          quantity: 1
+                          name: Sweater Pinko white
+                          productSlug: pinko-sweater-1G10XXY19KZ04-white
+                          productType:
+                            id: "1"
+                          images: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/072601_1_large.jpg
+  /viewCart:
+    get:
+      tags:
+      - Commerce Tool Cart Controller
+      summary: Call Commerce Tool Cart API to get Cart Details
+      operationId: viewCart
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      - name: cartId
+        in: query
+        description: ID of the cart
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example: "{\"responseCode\":200,\"cartDetails\": {\"responseCode\":\
+                \ 200,\"results\": {\"cartId\":\"01H521KVQ8D7D00JHHG42V1NVS\",\"customerId\"\
+                :null,\"cartState\":\"IN_PROCESS\",\"version\":9,\"lineItems\":[{\"\
+                id\":\"01H521KW77BVY80S7RD3PH0SES\",\"productId\":\"product2\",\"\
+                name\":\"SuddenDeathSauce\",\"variantId\":\"HS-SUDS-20\",\"images\"\
+                :\"/api/asset/content/Sudden-Death-Sauce-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D\"\
+                ,\"price\":10.99,\"quantity\":1,\"discountPrice\":10.99,\"discountededAmount\"\
+                :0}],\"totalPrice\":{\"centAmount\":40.96,\"currencyCode\":\"USD\"\
+                },\"subtotal\":40.96,\"totalDiscount\":0,\"totalLineItemQuantity\"\
+                :4,\"type\":\"Cart\",\"country\":\"US\",\"shipping\":[],\"itemShippingAddresses\"\
+                :[]}}"
+  /order:
+    get:
+      tags:
+      - lcsct-order-controller
+      summary: Call Commerce Tool Order API
+      operationId: getOrdersByOrderId
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      - name: orderId
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool My Orders API
+        content:
+          application/json: {}
+      responses:
+        "200":
+          description: Call Commerce Tool Order API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                orderDetails:
+                  status: 200
+                  message:
+                    data:
+                      order:
+                        id: e931247d-468d-45c6-bc52-fea1cb69a01e
+                        shippingGroup:
+                        - shippingAddress:
+                            firstName: Rachit
+                            lastName: Jain
+                            addressLine1: "100"
+                            addressLine2: aasdas
+                            country: US
+                            city: asdasd
+                            postalCode: "10007"
+                            state: ""
+                          shippingMethod: Standard US
+                          shippingPrice:
+                            currency: USD
+                            amount: 273
+                            fractionDigits: 2
+                          lineItems:
+                          - id: 4a1a3b94-5952-4fd7-9df8-1755450d1875
+                            state: Initial
+                            name: Polo “Jining” Peuterey dark blue
+                            variant:
+                              sku: M0E20000000E54V
+                              images: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/080162_1_medium.jpg
+                            quantity: 1
+                            includedDiscounts:
+                            - 10% Sale
+                            price:
+                              amount: 9102
+                              currency: USD
+                              fractionDigits: 2
+                        billingAddress:
+                          firstName: Rachit
+                          lastName: Jain
+                          addressLine1: "100"
+                          addressLine2: aasdas
+                          state: US
+                          city: asdasd
+                          country:
+                          - ""
+                          - "10007"
+                        orderNumber: null
+                        customerEmail: rachit.jain@logixal.com
+                        shippingMode: Single
+                        orderSubmittedDate: 2023-07-25T19:00:15.555Z
+                        orderState: Open
+                        totalPrice:
+                          amount: 10312
+                          currency: USD
+                          fractionDigits: 2
+                        subTotal:
+                          currency: USD
+                          fractionDigits: 2
+                          amount: 9102
+                        discountPrice:
+                          currency: USD
+                          fractionDigits: 2
+                          amount: 0
+                        taxes:
+                          amount: 937
+                          currency: USD
+                          fractionDigits: 2
+                        totalShippingPrice:
+                          amount: 273
+                          currencyCode: USD
+                          fractionDigits: 2
+                        payment:
+                          mode: VISA
+                          cardNum: '***1111'
+  /getShippingMethods:
+    get:
+      tags:
+      - lcsct-checkout-controller
+      summary: Call Commerce Tool API to get Shipping Methods
+      operationId: getShippingMethods
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool API
+        content:
+          application/json: {}
+      responses:
+        "200":
+          description: Call Commerce Tool API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    shippingOptions:
+                    - shippingMethod: Standard US
+                      description: Delivery in 5-6 working days
+                      price: 300
+                      currency: USD
+                    - shippingMethod: NewShipping
+                      description: Delivery in 5-6 working days
+                      price: 300
+                      currency: EUR
+                    - shippingMethod: Express US
+                      description: Same day delivery
+                      price: 1000
+                      currency: USD
+                    - shippingMethod: Express EU
+                      description: Same day delivery
+                      price: 1000
+                      currency: EUR
+  /getCustomer:
+    get:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Customer API
+      operationId: getCustomer
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /getCustomerAddress:
+    get:
+      tags:
+      - lcsct-checkout-controller
+      summary: Call Commerce Tool API to get Customer Address
+      operationId: getCustomerAddress
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool API
+        content:
+          application/json: {}
+      responses:
+        "200":
+          description: Call Commerce Tool API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    customerAddress:
+                    - id: USK6Hk_n
+                      key: a62f57bd-aa54-4505-8f28-9ba88e1dbc63
+                      firstName: Shailendra
+                      lastName: Singh
+                      streetName: 1 Apple Park Way
+                      streetNumber: 1 Apple Park Way
+                      postalCode: "95014"
+                      city: IN
+                      country: DE
+                      phone: "05686856866"
+                    - id: Yx0uL8Hi
+                      key: eb2e0c9f-5026-4169-1a8e-bbb142518097
+                      firstName: Anand
+                      lastName: Chauhan
+                      streetName: Chinatown
+                      streetNumber: 23A
+                      postalCode: "10013"
+                      city: New York
+                      country: DE
+                      phone: "04027800419"
+  /customer/orders:
+    get:
+      tags:
+      - lcsct-order-controller
+      summary: Call Commerce Tool Orders API
+      operationId: getOrdersByCustomerId
+      parameters:
+      - name: offset
+        in: query
+        description: offset for pagination
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: pageSize
+        in: query
+        description: pageSize for pagination
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        description: Details for Commerce Tool My Orders API
+        content:
+          application/json: {}
+      responses:
+        "200":
+          description: Call Commerce Tool Orders API is successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    orders:
+                      results:
+                      - lineItems:
+                        - state: NEW
+                          id: 01H66NDT8K88400RM4M2C71402
+                          name: Green Ghost
+                          quantity: 1
+                          images: "/api/asset/content/Green-Ghost-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                          price:
+                            value:
+                              centAmount: 9.99
+                              currencyCode: USD
+                          productId: product1
+                        - id: 01H66NDT8MNC911H2RQRZ30VW9
+                          name: Sudden Death Sauce
+                          quantity: 1
+                          images: "/api/asset/content/Sudden-Death-Sauce-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                          price:
+                            value:
+                              centAmount: 10.99
+                              currencyCode: USD
+                          productId: product2
+                        orderState: SUBMITTED
+                        orderDate: 2023-07-19T10:48:19.345Z
+                        orderId: 01H66NDQVV7K0K0JSW5WEA1TXV
+                      - lineItems:
+                        - state: NEW
+                          id: 01H5PVEQX32HQX1WQM9XC80MTW
+                          name: Cool Cayenne Pepper Hot Sauce
+                          quantity: 2
+                          images: "/api/asset/content/Cool-Cayenne-Pepper-Hot-Sauce-Bottle-2.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                          price:
+                            value:
+                              centAmount: 11.98
+                              currencyCode: USD
+                          productId: product5
+                        - id: 01H5PVEQX3WG8T0A8D87ZT1MVJ
+                          name: Green Ghost
+                          quantity: 5
+                          images: "/api/asset/content/Green-Ghost-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                          price:
+                            value:
+                              centAmount: 49.95
+                              currencyCode: USD
+                          productId: product1
+                        orderState: SUBMITTED
+                        orderDate: 2023-06-10T06:41:48.226Z
+                        orderId: 01H5PVEK9F8JNP0E5EABYE17FG
+                      - lineItems:
+                        - state: NEW
+                          id: 01H1YBNYC4YJMA13D8XMAJ14B7
+                          name: Sudden Death Sauce
+                          quantity: 1
+                          images: "/api/asset/content/Sudden-Death-Sauce-Bottle-1.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                          price:
+                            value:
+                              centAmount: 10.99
+                              currencyCode: USD
+                          productId: product2
+                        orderState: SUBMITTED
+                        orderDate: 2023-05-12T08:34:51.382Z
+                        orderId: 01H1YBN9WYPJNY1GSA86KC0PD4
+                      - lineItems:
+                        - state: NEW
+                          id: 01H07HFT9WYW7Q0TB5KZQG0N1K
+                          name: Cool Cayenne Pepper Hot Sauce
+                          quantity: 1
+                          images: "/api/asset/content/Cool-Cayenne-Pepper-Hot-Sauce-Bottle-2.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                          price:
+                            value:
+                              centAmount: 5.99
+                              currencyCode: USD
+                          productId: product5
+                        orderState: SUBMITTED
+                        orderDate: 2023-05-12T08:29:18.002Z
+                        orderId: 01H07HFRJ588GG0SGRXKN70PTN
+                      total: 10
+                      count: 4
+                      offset: 0
+  /customer-details/addresses:
+    get:
+      tags:
+      - lcsct-customer-controller
+      summary: Call Commerce Tool Customer API to get Address
+      operationId: getCustomerAddressByCustomerId
+      parameters:
+      - name: lcs-cookie
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+components:
+  schemas:
+    Errors:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GenericResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Errors'
+        message:
+          $ref: '#/components/schemas/GenericResults'
+    GenericResults:
+      type: object
+      properties:
+        data:
+          type: object
+    ReviewDetailsGenericResponse:
+      type: object
+      properties:
+        cartDetails:
+          $ref: '#/components/schemas/GenericResponse'
+        paymentDetails:
+          $ref: '#/components/schemas/GenericResponse'
