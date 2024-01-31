@@ -1,0 +1,205 @@
+openapi: 3.0.1
+info:
+  title: LCS-BFF
+  description: APIs for LCS-BFF.
+  version: "1.0"
+servers:
+- url: http://192.168.15.185:5000
+  description: Generated server url
+paths:
+  /testPost:
+    post:
+      tags:
+      - lcs-health-controller
+      operationId: testPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /testPostParam/{customerId}/address:
+    post:
+      tags:
+      - lcs-health-controller
+      operationId: testPostPathParam
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/{store}/{cms}/{action}:
+    post:
+      tags:
+      - lcs-aggregator-controller
+      summary: Call CMS service
+      operationId: aggregatorAction
+      parameters:
+      - name: store
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: cms
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Details of the CMS Strapi
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Aggregator Request for Menus:
+                summary: Menus
+                description: Aggregator Request for Menus
+              Aggregator Request for AllBanners:
+                summary: AllBanners
+                description: Aggregator Request for AllBanners
+                value:
+                  bannerDetails:
+                    body:
+                      populate[Banner][populate]: '*'
+              Aggregator Request for FilterBannerByName:
+                summary: FilterBannerByName
+                description: Aggregator Request for FilterBannerByName
+                value:
+                  bannerDetails:
+                    body:
+                      populate[Banner][populate]: '*'
+                      filters[BannerName][$eq]: Summer Collection
+              Aggregator Request for Static-Pages:
+                summary: Static-Pages
+                description: Aggregator Request for Static-Pages
+                value:
+                  staticPagesDetails:
+                    body:
+                      filters[field_title][$eq]: Privacy%20Policy
+        required: true
+      responses:
+        "200":
+          description: Call to CMS services is successful
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+  /api/{store}/{action}:
+    post:
+      tags:
+      - lcs-aggregator-controller
+      summary: Call other service
+      operationId: aggregatorAction_1
+      parameters:
+      - name: store
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Details of the Item to be created
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Aggregator Request for PDP:
+                summary: PDP
+                description: Aggregator Request for PDP
+                value:
+                  recommendation:
+                    query:
+                    - key: text.en
+                      value: green
+                  productDetails:
+                    query:
+                    - key: productId
+                      value: c6876d17-e6ba-4c9a-bea6-a37bd57386e2
+              Aggregator Request for Login:
+                summary: Login
+                description: Aggregator Request for Login
+                value:
+                  request: example
+        required: true
+      responses:
+        "200":
+          description: Call to other services is successful
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+  /test:
+    get:
+      tags:
+      - lcs-health-controller
+      operationId: test
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /health:
+    get:
+      tags:
+      - lcs-health-controller
+      operationId: getRequestData
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+components: {}
