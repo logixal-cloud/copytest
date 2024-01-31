@@ -1,0 +1,694 @@
+openapi: 3.0.1
+info:
+  title: LCS BFF Search Service
+  description: APIs for LCS BFF Search Service
+  version: "1.0"
+servers:
+- url: http://192.168.15.185:5020/api
+  description: Generated server url
+tags:
+- name: Ratings And Reviews API
+  description: Endpoints for ratings and reviews
+- name: Search APIs
+  description: Endpoints for Search resource
+paths:
+  /{searchType}/search/plp:
+    post:
+      tags:
+      - Search APIs
+      summary: Fetch the search/PLP results for the given request
+      operationId: getPLP
+      parameters:
+      - name: searchType
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Details of the Item to be created
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              CT:
+                summary: CT
+                description: CT
+                value:
+                  plp:
+                    body:
+                      PageNumber: 1
+                      PageItems: 10
+                      PageSize: 5
+                      CategoryId: ""
+                      SearchTerm: shirt
+                      Facets:
+                      - facetName: color
+                        facetValue:
+                        - blue
+                        - red
+                      - facetName: size
+                        facetValue:
+                        - XL
+                      - facetName: price
+                        facetValue:
+                        - 100
+                        - 1000
+              BL:
+                summary: BL
+                description: BL
+                value:
+                  plp:
+                    body:
+                      PageNumber: 1
+                      PageItems: 10
+                      PageSize: 5
+                      CategoryId: ""
+                      SearchTerm: shirt
+                      Facets:
+                      - facetName: color
+                        facetValue:
+                        - blue
+                        - red
+                      - facetName: size
+                        facetValue:
+                        - XL
+                      - facetName: price
+                        facetValue:
+                        - 100
+                        - 1000
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /{searchType}/reviews/createReview:
+    post:
+      tags:
+      - Ratings And Reviews API
+      summary: Call Create review API to create a new review for product
+      operationId: createReview
+      parameters:
+      - name: searchType
+        in: path
+        description: Search Type to be sent by the client identifying which store
+          to use e.g. CT(Commerce tools) or BL (Broadleaf)
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: "Call to create review api successful, Create Review API successful\
+            \ <br><br><b>Note:</b> Call to API is successful or unsuccessful, same\
+            \ status code of 200 is returned. Differentiation between different errors\
+            \ can be done based on the error codes in response.\""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                createReviewAction:
+                  status: 200
+                  message:
+                    data:
+                      reviewDetails:
+                        id: 04bfd099-6cb5-406c-ac32-3e74ec1ec419
+                        createdAt: 2024-01-12T09:51:55.931Z
+                        customerName: Prathamesh Indulkar
+                        rating: 5
+                        reviewTitle: Good tshirt and fits well
+                        review: Its a good tshirt and good quality fabric.
+  /{searchType}/search/recommendations:
+    get:
+      tags:
+      - Search APIs
+      summary: Fetch the recommendations for the given product id
+      operationId: getRecommendations
+      parameters:
+      - name: params
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/MultiValueMapStringString'
+      - name: searchType
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                responseCode: 200
+                results:
+                  productsList:
+                  - productId: 01FA39WERBABCQ0X3DMQTB1H33
+                    title: Deathly Hot Sauce Bundle
+                    price:
+                      amount: 17
+                      currency: USD
+                    url: /hot-sauces/deathly-hot-sauce-bundle
+                    image: "https://192.168.15.236:8456/api/asset/content/Bull-Snort-Bundle-4.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                    actions:
+                      compare: Add to compare
+                      ideaBoard: Add to Idea Board
+                      registry: Add to Gift Registry
+                      quickView: Quick view
+                    badge:
+                      label: Online Only
+                      priority: 1
+                    attributes: Special Product Alert!
+                    rating: 0.66
+                    reviews: 12
+                  - productId: product1541
+                    title: 1541 Heat Clinic Official Holiday Hat
+                    price:
+                      amount: 1.6
+                      currency: USD
+                    url: /official-hat1541
+                    variants:
+                    - HA-HCOHH-20
+                    image: "https://192.168.15.236:8456/api/asset/content/hat_image.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                    actions:
+                      compare: Add to compare
+                      ideaBoard: Add to Idea Board
+                      registry: Add to Gift Registry
+                      quickView: Quick view
+                    badge:
+                      label: Online Only
+                      priority: 1
+                    attributes: Special Product Alert!
+                    rating: 0.66
+                    reviews: 12
+  /{searchType}/search/product:
+    get:
+      tags:
+      - Search APIs
+      summary: Fetch the product details  for the given product id for single sku
+        or multi sku product
+      operationId: getProductDetails
+      parameters:
+      - name: searchType
+        in: path
+        description: Search Type to be sent by the client identifying which search
+          to use e.g. CT(Commerce tools) or BL (Broadleaf)
+        required: true
+        schema:
+          type: string
+      - name: productId
+        in: query
+        description: ID of the product resource
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    productDetails:
+                      prodid: c6876d17-e6ba-4c9a-bea6-a37bd57386e2
+                      defaultVariantId: 1
+                      price: 18625
+                      currency: EUR
+                      fractionDigits: 2
+                      defaultSalePrice:
+                        price: 14900
+                        currency: EUR
+                        fractionDigits: 2
+                      title: Sweater Better Rich grey
+                      subTitle: null
+                      rating: 4
+                      promoText: (Save 10% with MILITARY STAR)
+                    productType: main
+                    imagesData:
+                    - image: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/079870_1_large.jpg
+                      text: null
+                    variants:
+                    - sku: M0E20000000E2JK
+                      id: 2
+                      imagesData:
+                      - image: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/079870_1_large.jpg
+                        text: null
+                      basePrice:
+                        price: 18625
+                        currency: EUR
+                        fractionDigits: 2
+                      salePrice:
+                        price: 14900
+                        currency: EUR
+                        fractionDigits: 2
+                      optionValues:
+                        color: grey
+                        size: xs
+                    - sku: M0E20000000E2JL
+                      id: 3
+                      imagesData:
+                      - image: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/079870_1_large.jpg
+                        text: null
+                      basePrice:
+                        price: 18625
+                        currency: EUR
+                        fractionDigits: 2
+                      salePrice:
+                        price: 14900
+                        currency: EUR
+                        fractionDigits: 2
+                      optionValues:
+                        color: grey
+                        size: s
+                    - sku: M0E20000000E2JM
+                      id: 4
+                      imagesData:
+                      - image: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/079870_1_large.jpg
+                        text: null
+                      basePrice:
+                        price: 18625
+                        currency: EUR
+                        fractionDigits: 2
+                      salePrice:
+                        price: 14900
+                        currency: EUR
+                        fractionDigits: 2
+                      optionValues:
+                        color: grey
+                        size: m
+                    - sku: M0E20000000E2JN
+                      id: 5
+                      imagesData:
+                      - image: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/079870_1_large.jpg
+                        text: null
+                      basePrice:
+                        price: 18625
+                        currency: EUR
+                        fractionDigits: 2
+                      salePrice:
+                        price: 14900
+                        currency: EUR
+                        fractionDigits: 2
+                      optionValues:
+                        color: grey
+                        size: l
+                    - sku: M0E20000000E2JO
+                      id: 6
+                      imagesData:
+                      - image: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/079870_1_large.jpg
+                        text: null
+                      basePrice:
+                        price: 18625
+                        currency: EUR
+                        fractionDigits: 2
+                      salePrice:
+                        price: 14900
+                        currency: EUR
+                        fractionDigits: 2
+                      optionValues:
+                        color: grey
+                        size: xl
+                    - sku: M0E20000000E2JP
+                      id: 7
+                      imagesData:
+                      - image: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/079870_1_large.jpg
+                        text: null
+                      basePrice:
+                        price: 18625
+                        currency: EUR
+                        fractionDigits: 2
+                      salePrice:
+                        price: 14900
+                        currency: EUR
+                        fractionDigits: 2
+                      optionValues:
+                        color: grey
+                        size: xxl
+                    - sku: M0E20000000E2JQ
+                      id: 8
+                      imagesData:
+                      - image: https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/079870_1_large.jpg
+                        text: null
+                      basePrice:
+                        price: 18625
+                        currency: EUR
+                        fractionDigits: 2
+                      salePrice:
+                        price: 14900
+                        currency: EUR
+                        fractionDigits: 2
+                      optionValues:
+                        color: grey
+                        size: xxxl
+                    options:
+                    - values:
+                      - grey
+                      - grey
+                      - grey
+                      - grey
+                      - grey
+                      - grey
+                      - grey
+                      name: color
+                    - values:
+                      - xs
+                      - s
+                      - m
+                      - l
+                      - xl
+                      - xxl
+                      - xxxl
+                      name: size
+                    actionsData:
+                    - cart
+                    - wishlist
+                    productOverviewDetails:
+                      Overview:
+                        description: "100% pre-shrunk organic cotton, GOTS certified.Made\
+                          \ in the USA, Los Angeles. Luxury finishing, soft and breathable\
+                          \ on skin. Color retention up to 100 washes. Shape retention\
+                          \ engineering"
+                      Review:
+                        description: "At first I was a little skeptical about buying\
+                          \ this product, being that it’s on the more expensive end,\
+                          \ but it definitely seemed like the case of you get what\
+                          \ you pay for. Liked the material. "
+                      Specification:
+                        description: "You can't go wrong with this classic in your\
+                          \ closet. Our high quality men's V-neck is the perfect choice\
+                          \ for kick-back casual or simple and refined looks. This\
+                          \ durable T-shirt will be your go-to for a long time to\
+                          \ come. Plus, it's sustainably sourced and made of soft,\
+                          \ 100% organic cotton so you can feel good about wearing\
+                          \ it."
+                      Offers:
+                        description: No Cost EMI plans are not available. You can
+                          continue to choose standard EMI plans at the time of payment.
+                      Returns:
+                        description: 10 days Return & Exchange
+  /{searchType}/search/menu:
+    get:
+      tags:
+      - Search APIs
+      summary: Fetch the Menu items from the service
+      operationId: getMenu
+      parameters:
+      - name: searchType
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Details of the Item to be created
+        content:
+          application/json:
+            examples:
+              CT:
+                summary: CT
+                description: CT
+                value:
+                  a: b
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /{searchType}/search/homeRecommendations:
+    get:
+      tags:
+      - Search APIs
+      summary: Fetch the home search recommendations for the given fragment
+      operationId: getHomeRecommendations
+      parameters:
+      - name: params
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/MultiValueMapStringString'
+      - name: searchType
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                responseCode: 200
+                results:
+                  productsList:
+                  - productId: 01FA39WERBABCQ0X3DMQTB1H33
+                    title: Deathly Hot Sauce Bundle
+                    price:
+                      amount: 17
+                      currency: USD
+                    url: /hot-sauces/deathly-hot-sauce-bundle
+                    image: "https://192.168.15.236:8456/api/asset/content/Bull-Snort-Bundle-4.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                    actions:
+                      compare: Add to compare
+                      ideaBoard: Add to Idea Board
+                      registry: Add to Gift Registry
+                      quickView: Quick view
+                    badge:
+                      label: Online Only
+                      priority: 1
+                    attributes: Special Product Alert!
+                    rating: 0.66
+                    reviews: 12
+                  - productId: product1541
+                    title: 1541 Heat Clinic Official Holiday Hat
+                    price:
+                      amount: 1.6
+                      currency: USD
+                    url: /official-hat1541
+                    variants:
+                    - HA-HCOHH-20
+                    image: "https://192.168.15.236:8456/api/asset/content/hat_image.jpg?contextRequest=%7B%22forceCatalogForFetch%22:false,%22applicationId%22:%222%22,%22tenantId%22:%225DF1363059675161A85F576D%22%7D"
+                    actions:
+                      compare: Add to compare
+                      ideaBoard: Add to Idea Board
+                      registry: Add to Gift Registry
+                      quickView: Quick view
+                    badge:
+                      label: Online Only
+                      priority: 1
+                    attributes: Special Product Alert!
+                    rating: 0.66
+                    reviews: 12
+  /{searchType}/search/autoSuggestion:
+    get:
+      tags:
+      - Search APIs
+      summary: Fetch the search/PLP results for the given request
+      operationId: getAutoSuggestion
+      parameters:
+      - name: searchType
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Details of the Item to be created
+        content:
+          application/json:
+            examples:
+              CT:
+                summary: CT
+                description: CT
+                value:
+                  plp:
+                    body:
+                      PageNumber: 1
+                      PageItems: 10
+                      PageSize: 5
+                      CategoryId: ""
+                      SearchTerm: shirt
+                      Facets:
+                      - facetName: color
+                        facetValue:
+                        - blue
+                        - red
+                      - facetName: size
+                        facetValue:
+                        - XL
+                      - facetName: price
+                        facetValue:
+                        - 100
+                        - 1000
+              BL:
+                summary: BL
+                description: BL
+                value:
+                  plp:
+                    body:
+                      PageNumber: 1
+                      PageItems: 10
+                      PageSize: 5
+                      CategoryId: ""
+                      SearchTerm: shirt
+                      Facets:
+                      - facetName: color
+                        facetValue:
+                        - blue
+                        - red
+                      - facetName: size
+                        facetValue:
+                        - XL
+                      - facetName: price
+                        facetValue:
+                        - 100
+                        - 1000
+        required: true
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /{searchType}/reviews/getProductReviews:
+    get:
+      tags:
+      - Ratings And Reviews API
+      summary: Fetch the product reviews for the given product id
+      operationId: getProductReviews
+      parameters:
+      - name: searchType
+        in: path
+        description: Search Type to be sent by the client identifying which store
+          to use e.g. CT(Commerce tools) or BL (Broadleaf)
+        required: true
+        schema:
+          type: string
+      - name: productId
+        in: query
+        description: ID of the product resource
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "This is for successful response<br><br><b>Note:</b> Call to\
+            \ API is successful or unsuccessful, same status code of 200 is returned.\
+            \ Differentiation between different errors can be done based on the error\
+            \ codes in response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                status: 200
+                message:
+                  data:
+                    reviews:
+                    - reviewId: dd1161b7-7d35-47ae-9c89-27c51051ef21
+                      CreatedAt: 2023-12-19T11:29:27.511Z
+                      AuthorName: PrathameshIndulkar
+                      Title: Incredible
+                      Text: Bestproductever
+                      Rating: 5
+                    - reviewId: 8aec811e-e598-43d3-9ffe-323a8a311d08
+                      CreatedAt: 2023-12-19T11:52:36.858Z
+                      AuthorName: ShalakaShrawage
+                      Title: Goodtshirtandfitswell
+                      Text: Itsagoodtshirtandgoodqualityfabric
+                      Rating: 4
+components:
+  schemas:
+    Errors:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GenericResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Errors'
+        message:
+          $ref: '#/components/schemas/GenericResults'
+    GenericResults:
+      type: object
+      properties:
+        data:
+          type: object
+    MultiValueMapStringString:
+      type: object
+      properties:
+        all:
+          type: object
+          additionalProperties:
+            type: string
+          writeOnly: true
+        empty:
+          type: boolean
+      additionalProperties:
+        type: array
+        items:
+          type: string
